@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map_canvas { height: 100% }
+</style>
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAymAbb5lySn0p7Ih1WlDIimy1zsV9cnSI&libraries=geometry&sensor=false"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://sdk.cocoafish.com/js/cocoafish-1.1.min.js"></script>
+
+<script type="text/javascript">
+var sdk = new Cocoafish("WYKfC4LfViT4uNOyzek8XQ5qJ4V1E6lj");
+var data = {
+       //email: 'CocoaPebbles@gmail.com', 
+       //password: 'demo',
+       //password_confirmation: 'demo',
+	   //first_name: 'cocoa',
+	   //last_name: 'pebbles'
+	   login: 'demo',
+	   password: 'demo'
+};
+
+var place_data = {
+	name: 'prospect select',
+	address: '100 windy street',
+	city: 'boca'
+};
+
+sdk.sendRequest('users/login.json', 'POST', data, false, callback);
+
+function callback(data) {
+	if(data.meta.status == 'ok' && data.meta.code == 200 && data.meta.method_name == 'loginUser') {
+		sdk.sendRequest('places/create.json', 'POST', place_data, false, place_callback);
+	} else {
+		console.log('meta: ' + data.meta.status);
+		console.log('response: ' + data.response.users[0].id);
+	}
+}
+
+function place_callback(data) {
+	console.log('meta: ' + data.meta.status);
+	console.log('id: ' + data.response.places[0].id + ' - name: ' + data.response.places[0].name);
+}
+
+/*
+function fblogin() {
+	//var fbappid = '345078782184926';
+	console.log('fblogin function is running');
+	console.log('sdk: ' + JSON.stringify(sdk));
+	var data = {
+		//id: '109216395704353',
+		type: 'facebook',
+		token: 'AAAE52Oo7Td4BAIxUCsYwhoO9sv3aQUpz1IG6mG9ZBioQZBLZAxjgoWB7ol0cKWrOxB1EGyRxwQlvlBrPpjvFC21wQZANHA6Vl7RUoZAciY5FWm7PSK5Y0'
+	};
+	sdk.sendRequest('users/external_account_login.json', 'POST', data, false, fblogincallback);	
+}
+
+function fblogincallback(data) {
+	console.log('meta: ' + data.meta.status);
+	console.log('response: ' + data.response.users[0].first_name);
+}*/
+</script>
+<script type="text/javascript">
+	/*$(function () {
+		var myLocation = new google.maps.LatLng(-34.397, 150.644);
+		var biz1 = new google.maps.LatLng(-34.398, 150.645);	
+		
+		var dist = google.maps.geometry.spherical.computeDistanceBetween(myLocation, biz1);
+		console.log('dist: ' + dist);
+
+		var myOptions = {
+			zoom: 8,
+			center: myLocation,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	});*/
+</script>
+</head>
+<body>
+
+</body>
+</html>
